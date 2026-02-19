@@ -25,7 +25,7 @@ const ProductSlider = ({ slides = defaultSlides }) => {
   };
 
   const handleLearnMore = (product) => {
-    navigate('/shop');
+    navigate('/recipes');
   };
 
   return (
