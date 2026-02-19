@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const defaultSlides = [
   { id: 1, img: "/66.webp", alt: "Classic", title: "Classic", color: "yellow" },
@@ -13,6 +14,7 @@ const defaultSlides = [
 
 const ProductSlider = ({ slides = defaultSlides }) => {
   const sliderRef = useRef(null);
+  const navigate = useNavigate();
 
   const slideLeft = () => {
     sliderRef.current.scrollBy({ left: -400, behavior: "smooth" });
@@ -20,6 +22,10 @@ const ProductSlider = ({ slides = defaultSlides }) => {
 
   const slideRight = () => {
     sliderRef.current.scrollBy({ left: 400, behavior: "smooth" });
+  };
+
+  const handleLearnMore = (product) => {
+    navigate('/shop');
   };
 
   return (
@@ -42,7 +48,7 @@ const ProductSlider = ({ slides = defaultSlides }) => {
                 <img src={s.img} alt={s.alt} />
                 <div className="slide-info">
                   <h3>{s.title}</h3>
-                  <button className="btn small" onClick={() => alert(`Learn more: ${s.title}`)}>Learn more</button>
+                  <button className="btn small" onClick={() => handleLearnMore(s)}>Learn more</button>
                 </div>
               </div>
             ))}
