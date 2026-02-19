@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useRef, useState } from "react";
+import Modal from './Modal'
 
 const defaultSlides = [
   { id: 1, img: "/66.webp", alt: "Classic", title: "Classic", color: "yellow" },
@@ -14,6 +14,7 @@ const defaultSlides = [
 
 const ProductSlider = ({ slides = defaultSlides }) => {
   const sliderRef = useRef(null);
+  const [selected, setSelected] = useState(null)
 
   const slideLeft = () => {
     sliderRef.current.scrollBy({ left: -400, behavior: "smooth" });
@@ -45,9 +46,9 @@ const ProductSlider = ({ slides = defaultSlides }) => {
                 <img src={s.img} alt={s.alt} />
                 <div className="slide-info">
                   <h3>{s.title}</h3>
-                  <Link to={`/recipes/${s.id}`} className="btn small" onClick={() => console.log('Learn more clicked:', s.title)}>
+                  <button className="btn small" onClick={() => setSelected(s)}>
                     Learn more
-                  </Link>
+                  </button>
                 </div>
               </div>
             ))}
@@ -58,6 +59,28 @@ const ProductSlider = ({ slides = defaultSlides }) => {
           </button>
 
         </div>
+        {selected && (
+          <Modal onClose={() => setSelected(null)}>
+            <div className="product-modal" style={{padding:20}}>
+              <img src={selected.img} alt={selected.alt} style={{width:'100%', borderRadius:8}} />
+              <h2 style={{marginTop:12}}>{selected.title} — Lay's</h2>
+              <p style={{marginTop:8}}>
+                Lay's {selected.title} chips — iconic, crunchy potato chips with a signature crisp. Flavor notes: {selected.title} has bright, savory notes and a satisfying crunch.
+              </p>
+              <p style={{marginTop:8}}>
+                Suggested serving: pair with a cold drink or enjoy solo. For recipe ideas, try crushing into a crunchy topping for salads or using as a coating for baked chicken.
+              </p>
+              <div style={{display:'flex', gap:12, marginTop:16}}>
+                <button className="btn" onClick={() => {
+                  // simple prompt flow: show a short confirm then close
+                  alert(`Thanks! More details about ${selected.title} sent.`);
+                  setSelected(null);
+                }}>OK</button>
+                <button className="btn-secondary" onClick={() => setSelected(null)}>Close</button>
+              </div>
+            </div>
+          </Modal>
+        )}
       </div>
     </section>
   );
