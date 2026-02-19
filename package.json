@@ -2,7 +2,6 @@
   "name": "react-spa-activity",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://doris2106.github.io/react-lays/",
   "type": "module",
   "scripts": {
     "dev": "vite",
