@@ -25,6 +25,7 @@ const ProductSlider = ({ slides = defaultSlides }) => {
   };
 
   const handleLearnMore = (product) => {
+    console.log('Learn more clicked for:', product.title);
     navigate('/recipes');
   };
 
