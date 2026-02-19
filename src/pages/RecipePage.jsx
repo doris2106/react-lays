@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 const recipeData = {
   title: 'Lay\'s Crispy Snack Mix',
@@ -34,7 +35,42 @@ const recipeData = {
 }
 
 export default function RecipePage() {
+  const { id } = useParams()
   const [checkedIngredients, setCheckedIngredients] = useState({})
+  const [currentRecipe, setCurrentRecipe] = useState(recipeData)
+
+  useEffect(() => {
+    // If an id param is provided, attempt to load a matching recipe
+    if (id) {
+      // Basic mapping - in future this can be fetched from API or expanded
+      const idNum = parseInt(id, 10)
+      const mapped = {
+        1: {
+          title: "Lay's Crispy Snack Mix",
+          ingredients: recipeData.ingredients,
+          instructions: recipeData.instructions,
+          related: recipeData.related
+        },
+        2: {
+          title: "Sweet & Salty Blend",
+          ingredients: ["1 cup Lay's Classic", "1/2 cup nuts", "2 tbsp maple syrup"],
+          instructions: ["Mix", "Bake 10 minutes"],
+          related: recipeData.related
+        },
+        3: {
+          title: "Garden Fresh Salad",
+          ingredients: ["Lettuce", "Tomatoes", "Cucumber"],
+          instructions: ["Chop", "Toss"] ,
+          related: recipeData.related
+        }
+      }
+
+      if (mapped[idNum]) setCurrentRecipe(mapped[idNum])
+      else setCurrentRecipe(recipeData)
+    } else {
+      setCurrentRecipe(recipeData)
+    }
+  }, [id])
 
   const toggleIngredient = (index) => {
     setCheckedIngredients(prev => ({
@@ -49,13 +85,13 @@ export default function RecipePage() {
         <div className="recipe-layout">
           {/* LEFT PANEL */}
           <div className="recipe-main">
-            <h1>{recipeData.title}</h1>
+            <h1>{currentRecipe.title}</h1>
 
             {/* INGREDIENTS */}
             <section className="recipe-section">
               <h2>Ingredients</h2>
               <div className="ingredients-list">
-                {recipeData.ingredients.map((ingredient, i) => (
+                {currentRecipe.ingredients.map((ingredient, i) => (
                   <label key={i} className="ingredient-item">
                     <input 
                       type="checkbox" 
@@ -72,7 +108,7 @@ export default function RecipePage() {
             <section className="recipe-section">
               <h2>Instructions</h2>
               <ol className="instructions-list">
-                {recipeData.instructions.map((step, i) => (
+                {currentRecipe.instructions.map((step, i) => (
                   <li key={i}><strong>Step {i + 1}:</strong> {step}</li>
                 ))}
               </ol>
@@ -83,7 +119,7 @@ export default function RecipePage() {
           <aside className="recipe-sidebar">
             <h3>Related Recipes</h3>
             <div className="related-recipes">
-              {recipeData.related.map(recipe => (
+              {currentRecipe.related.map(recipe => (
                 <div key={recipe.id} className="recipe-card">
                   <img src={`/${recipe.img}`} alt={recipe.name} />
                   <p>{recipe.name}</p>

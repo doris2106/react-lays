@@ -35,6 +35,7 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/recipes" element={<RecipePage />} />
+            <Route path="/recipes/:id" element={<RecipePage />} />
             <Route path="/shop" element={<ShopPage />} />
           </Routes>
         </main>
