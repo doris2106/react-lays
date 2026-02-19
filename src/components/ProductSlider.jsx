@@ -45,7 +45,9 @@ const ProductSlider = ({ slides = defaultSlides }) => {
                 <img src={s.img} alt={s.alt} />
                 <div className="slide-info">
                   <h3>{s.title}</h3>
-                  <Link to="/recipes" className="btn small">Learn more</Link>
+                  <Link to="/recipes" className="btn small" onClick={() => console.log('Learn more clicked:', s.title)}>
+                    Learn more
+                  </Link>
                 </div>
               </div>
             ))}
