@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import NewsletterForm from "../components/NewsletterForm";
 import ProductSlider from "../components/ProductSlider";
 import Testimonials from "../components/Testimonials";
@@ -123,9 +123,9 @@ export default function HomePage() {
                   Discover innovative ways to enjoy Lay's in your favourite
                   dishes and snacks.
                 </p>
-                <a href="/recipes" className="learn-more">
+                <Link to="/recipes" className="learn-more">
                   Learn More →
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -138,9 +138,9 @@ export default function HomePage() {
                 <p>
                   Make your celebrations unforgettable with Lay's crisps.
                 </p>
-                <a href="/recipes" className="learn-more">
+                <Link to="/recipes" className="learn-more">
                   Learn More →
-                </a>
+                </Link>
               </div>
             </div>
           </div>
